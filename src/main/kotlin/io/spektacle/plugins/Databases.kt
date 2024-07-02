@@ -2,7 +2,7 @@ package io.spektacle.plugins
 
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
-import io.ktor.server.application.*
+import io.ktor.server.application.Application
 import org.flywaydb.core.Flyway
 import org.jetbrains.exposed.sql.Database
 
@@ -19,7 +19,7 @@ fun Application.configureDatabases() {
         return HikariDataSource(config)
     }
     val dataSource = hikari()
-    val database = Database.connect(dataSource)
+    Database.connect(dataSource)
 
     Flyway.configure().dataSource(dataSource).baselineOnMigrate(true).load().migrate()
 }
